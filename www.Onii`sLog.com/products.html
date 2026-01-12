@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Products | Onii’s Log Marketplace</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body { margin:0; font-family:Arial, Helvetica, sans-serif; background:#0b0f14; color:#e5e5e5; }
+    header { background:#111827; padding:15px 30px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1f2937; }
+    header h1 { color:#22c55e; margin:0; font-size:24px; }
+    nav a, .logout-btn { color:#110d0d; margin-left:15px; text-decoration:none; font-weight:600; cursor:pointer; }
+    nav a:hover, .logout-btn:hover { color:#22c55e; }
+    .products-container { max-width:1200px; margin:30px auto; display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:20px; padding:0 20px; }
+    .product-card { background:#111827; border:1px solid #1f2937; border-radius:8px; padding:15px; transition:transform 0.2s; text-align:center; }
+    .product-card:hover { transform:translateY(-5px); border-color:#22c55e; }
+    .product-card img { width:140px; height:140px; object-fit:contain; border-radius:8px; margin-bottom:10px; }
+    .product-card h3 { margin:0 0 6px; font-size:18px; color:#f9fafb; }
+    .product-card p { margin:0 0 10px; font-size:14px; color:#9ca3af; }
+    .product-card span { font-weight:700; color:#22c55e; font-size:16px; }
+    .add-cart-btn { background:#22c55e; border:none; padding:8px 12px; border-radius:5px; cursor:pointer; font-weight:600; margin-top:10px; }
+    .add-cart-btn:hover { background:#16a34a; }
+    .stock { font-size:13px; color:#f87171; margin-top:5px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Onii’s Log Marketplace</h1>
+    <nav>
+      <a href="cart.html">Cart</a>
+      <button class="logout-btn" id="logoutBtn">Logout</button>
+    </nav>
+  </header>
+
+  <div class="products-container" id="productsContainer"></div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBwTbHSIl1avnU84nmb0Fm3a0gL9Oy5Q_k",
+      authDomain: "oniis-log-marketplace.firebaseapp.com",
+      projectId: "oniis-log-marketplace",
+      appId: "1:470242896422:web:6fab08ea9f209fd42194e7"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    onAuthStateChanged(auth, user => { if (!user) location.href="login.html"; });
+    document.getElementById("logoutBtn").addEventListener("click", ()=> {
+      signOut(auth).then(()=> location.href="login.html");
+    });
+
+    // Products with real-ish icons
+    const products = [
+      {
+        name:"USA Facebook Account (0-30 friends)",
+        category:"Facebook",
+        price:10,
+        stock:14,
+        img:"https://upload.wikimedia.org/wikipedia/commons/1/16/Facebook-icon-1.png",
+        description:"Random USA Facebook account with 0-30 friends and moderate activity."
+      },
+      {
+        name:"Discord Aged Account",
+        category:"Discord",
+        price:4,
+        stock:27,
+        img:"/10691866.jpg",
+        description:"Discord accounts 12-20 months aged."
+      },
+      {
+        name:"Instagram Account with Photos",
+        category:"Instagram",
+        price:3.5,
+        stock:7,
+        img:"https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg",
+        description:"Instagram account, 2FA enabled, with multiple posts/photos."
+      },
+      {
+        name:"TikTok Profile USA",
+        category:"TikTok",
+        price:6,
+        stock:10,
+        img:"/tiktok.jpg",
+        description:"HQ TikTok account, 2FA, USA-based followers."
+      },
+      {
+        name:"VERY OLD HQ RANDOM COUNTRIES ALREADY CREATED PROFILE FACEBOOK",
+        category:"Facebook",
+        price:10,
+        stock:14,
+        img:"https://upload.wikimedia.org/wikipedia/commons/1/16/Facebook-icon-1.png",
+        description:"Random Facebook account with 0-100 friends and moderate activity."
+      },
+      {
+        name:"X New Account",
+        category:"Twitter",
+        price:6,
+        stock:12,
+        img:"https://upload.wikimedia.org/wikipedia/commons/6/6f/Logo_of_Twitter.svg",
+        description:"New Twitter account, email verified and 2FA."
+      },
+        {
+        name:"TikTok Profile CANADA",
+        category:"TikTok",
+        price:6,
+        stock:10,
+        img:"/tiktok.jpg",
+        description:"HQ TikTok account, 2FA, CANADA-based followers."
+      },
+       {
+        name:"PURE HIGH QUALITY USA ALREADY CREATED  PROFILE FACEBOOK",
+        category:"Facebook",
+        price:10,
+        stock:14,
+        img:"https://upload.wikimedia.org/wikipedia/commons/1/16/Facebook-icon-1.png",
+        description:"Random USA Facebook account with 0-30 friends and moderate activity."
+      },
+
+      {
+        name:"Discord USA Account",
+        category:"Discord",
+        price:4,
+        stock:27,
+        img:"/10691866.jpg",
+        description:"Discord accounts 12-20 months aged."
+      },
+       {
+        name:"CANADA 🇨🇦 FACEBOOK 30+ FRIENDS",
+        category:"Facebook",
+        price:10,
+        stock:14,
+        img:"https://upload.wikimedia.org/wikipedia/commons/1/16/Facebook-icon-1.png",
+        description:"CANADA Facebook account with 30+ friends and moderate activity."
+      },
+       {
+        name:" X 500+ FOLLOWERS 2020 ",
+        category:"Twitter",
+        price:6,
+        stock:12,
+        img:"https://upload.wikimedia.org/wikipedia/commons/6/6f/Logo_of_Twitter.svg",
+        description:"Twitter account, email verified and 2FA."
+      },
+      {
+        name:"Discord GERMANY Account",
+        category:"Discord",
+        price:4,
+        stock:27,
+        img:"/10691866.jpg",
+        description:"Discord accounts 12-20 months aged."
+      },
+      {
+        name:" FOREIGN Telegram Account",
+        category:"Telegram",
+        price:4,
+        stock:0,
+        img:"/Telegram.jpg",
+        description:"Telegram account available, FOREIGN contacts."
+      },
+       {
+        name:"VIETNAM 🇻🇳 FACEBOOK 50-200+ FRIENDS",
+        category:"Facebook",
+        price:10,
+        stock:14,
+        img:"https://upload.wikimedia.org/wikipedia/commons/1/16/Facebook-icon-1.png",
+        description:"VIETNAM Facebook account with 50-200 friends and moderate activity."
+      },
+       {
+        name:"X 1k+ followers Account",
+        category:"Twitter",
+        price:6,
+        stock:12,
+        img:"https://upload.wikimedia.org/wikipedia/commons/6/6f/Logo_of_Twitter.svg",
+        description:"Twitter account, email verified and 2FA."
+      },
+      {
+        name:"Discord RANDOM Account",
+        category:"Discord",
+        price:4,
+        stock:27,
+        img:"/10691866.jpg",
+        description:"Discord accounts 12-20 months aged."
+      },
+        {
+        name:"TikTok Profile JAPAN",
+        category:"TikTok",
+        price:6,
+        stock:10,
+        img:"/tiktok.jpg",
+        description:"HQ TikTok account, 2FA, JAPAN-based followers."
+      },
+        {
+        name:" EXPRESS VPN 1 MONTH SUB",
+        category:"VPN",
+        price:7,
+        stock:7,
+        img:"/vpn.jpg",
+        description:" VPN, 1 user, SPAMMED."
+      },
+       {
+        name:" CANADA Telegram Account",
+        category:"Telegram",
+        price:4,
+        stock:0,
+        img:"/Telegram.jpg",
+        description:"Telegram account available, CANADA contacts."
+      },
+      {
+        name:"Email Account",
+        category:"Mail",
+        price:4,
+        stock:5,
+        img:"/gmaill.jpg",
+        description:"Gmail account, usable format email and password."
+      },
+        {
+        name:"TikTok Profile SOUTH-KOREA",
+        category:"TikTok",
+        price:6,
+        stock:10,
+        img:"/tiktok.jpg",
+        description:"HQ TikTok account, 2FA, SOUTH-KOREA based followers."
+      },
+         {
+        name:"RANDOM FACEBOOK 50 - 100+ FRIENDS",
+        category:"Facebook",
+        price:10,
+        stock:14,
+        img:"https://upload.wikimedia.org/wikipedia/commons/1/16/Facebook-icon-1.png",
+        description:"Random Facebook account with 50-100 friends and moderate activity."
+      },
+      {
+        name:"Telegram Account",
+        category:"Telegram",
+        price:4,
+        stock:0,
+        img:"/Telegram.jpg",
+        description:"Telegram account available, USA contacts."
+      },
+      {
+        name:" VPN Subscription",
+        category:"VPN",
+        price:7,
+        stock:7,
+        img:"/vpn.jpg",
+        description:" VPN, 1 user, SPAMMED."
+      }
+    ];
+
+    const container = document.getElementById("productsContainer");
+    products.forEach(p => {
+      const card = document.createElement("div");
+      card.classList.add("product-card");
+      card.innerHTML = `
+        <img src="${p.img}" alt="${p.name}">
+        <h3>${p.name}</h3>
+        <p>${p.description}</p>
+        <p>Category: ${p.category}</p>
+        <span>$${p.price.toFixed(2)}</span>
+        <div class="stock">${p.stock>0?"In Stock: "+p.stock+" qty.":"Out of Stock"}</div>
+        <button class="add-cart-btn" ${p.stock===0?"disabled":""}>Add to Cart</button>
+      `;
+      container.appendChild(card);
+
+      if(p.stock>0){
+        card.querySelector(".add-cart-btn").addEventListener("click",()=>{
+          let cart = JSON.parse(localStorage.getItem("cart"))||[];
+          cart.push({...p});
+          localStorage.setItem("cart", JSON.stringify(cart));
+          alert(`${p.name} added to cart!`);
+        });
+      }
+    });
+  </script>
+</body>
+</html>
