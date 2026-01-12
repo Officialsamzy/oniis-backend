@@ -1,29 +1,17 @@
 const express = require("express");
-const fetch = require("node-fetch");
 const cors = require("cors");
 
 const app = express();
-
-// Railway REQUIRED
 const PORT = process.env.PORT || 3000;
 
-// Telegram credentials from Railway ENV
-const TELEGRAM_BOT_TOKEN = process.env.BOT_TOKEN;
-const CHAT_ID = process.env.CHAT_ID;
+const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN";
+const CHAT_ID = "1330802772";
 
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Onii’s Log Backend is running ✅");
-});
-
 app.post("/notify", async (req, res) => {
   const { message } = req.body;
-
-  if (!message) {
-    return res.status(400).json({ success: false, error: "Message required" });
-  }
 
   try {
     const response = await fetch(
@@ -33,8 +21,7 @@ app.post("/notify", async (req, res) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           chat_id: CHAT_ID,
-          text: message,
-          parse_mode: "HTML"
+          text: message
         })
       }
     );

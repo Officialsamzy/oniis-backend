@@ -1,18 +1,12 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "server.js",
-  "type": "module",
+  "main": "server.cjs",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.cjs"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^5.2.1",
-    "node-fetch": "^3.3.2"
+    "express": "^5.2.1"
   }
 }
