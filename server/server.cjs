@@ -1,14 +1,19 @@
 const express = require("express");
+const fetch = require("node-fetch");
 const cors = require("cors");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
-const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN";
-const CHAT_ID = "1330802772";
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
 app.use(cors());
 app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.send("Backend is running 🚀");
+});
 
 app.post("/notify", async (req, res) => {
   const { message } = req.body;
@@ -21,8 +26,8 @@ app.post("/notify", async (req, res) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           chat_id: CHAT_ID,
-          text: message
-        })
+          text: message,
+        }),
       }
     );
 
