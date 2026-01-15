@@ -180,7 +180,7 @@ async function submitOrder() {
   const message = `New Order!\nEmail: ${email}\nItems:\n${cart.map(i=>i.name+" ($"+i.price.toFixed(2)+")").join("\n")}\nTotal: $${cart.reduce((a,b)=>a+b.price,0).toFixed(2)}`;
 
   try {
-    const res = await fetch("https://api.oniislog.shop/", {
+    const res = await fetch("https://api.oniislog.shop/notify", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message })
